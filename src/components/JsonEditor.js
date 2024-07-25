@@ -9,12 +9,14 @@ const CodeMirror = dynamic(
 
 const JsonEditor = ({ jsonContent, setJsonContent }) => {
   return (
-    <CodeMirror
-      value={jsonContent}
-      height="100%"
-      onChange={(value) => setJsonContent(value)}
-      className="flex-grow border rounded mb-4"
-    />
+    <div className="h-full flex flex-col">
+      <CodeMirror
+        value={jsonContent}
+        height="100%"
+        onChange={(value) => setJsonContent(value)}
+        className="flex-grow border rounded"
+      />
+    </div>
   );
 };
 

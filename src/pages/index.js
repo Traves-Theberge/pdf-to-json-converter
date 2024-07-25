@@ -120,20 +120,16 @@ const HomePage = () => {
           </button>
         </div>
       </div>
-      <div className="flex flex-1 overflow-hidden">
-        <div className="w-2/5 p-4 overflow-hidden">
+      <div className="flex-grow flex overflow-hidden">
+        <div className="w-1/2 p-4 overflow-hidden">
           {pdfFile && <PdfViewer pdfUrl={pdfFile} />}
           {isProcessing && <ProgressBar progress={progress} />}
         </div>
-        <div className="w-3/5 p-4 flex flex-col overflow-hidden">
+        <div className="w-1/2 p-4 flex flex-col overflow-hidden">
           {showPreview ? (
-            <div className="flex-1 overflow-auto">
-              <JsonPreview content={jsonContent} />
-            </div>
+            <JsonPreview content={jsonContent} />
           ) : (
-            <div className="flex-1 overflow-hidden">
-              <JsonEditor jsonContent={jsonContent} setJsonContent={setJsonContent} />
-            </div>
+            <JsonEditor jsonContent={jsonContent} setJsonContent={setJsonContent} />
           )}
         </div>
       </div>
