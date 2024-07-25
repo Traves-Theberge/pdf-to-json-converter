@@ -2,8 +2,7 @@
 
 This project is a web application designed to convert PDF files into JSON format. Users can upload a PDF, view its content, convert it to JSON, edit the JSON content, and preview the result.
 
-![Uploading image.png…]()
-
+![Screenshot 2024-07-24 235538](https://github.com/user-attachments/assets/7499b4b3-492c-4028-898b-92cd7c9727c0)
 
 ## Features
 
