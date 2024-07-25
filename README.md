@@ -1,8 +1,6 @@
-# PDF to MDX Converter With PDF VIEWER, MDX Viewer and MDX Editor. 
+# PDF to JSON Converter with PDF Viewer and JSON Editor
 
-This project is a web application designed to convert PDF files into MDX (Markdown with JSX) format. Users can upload a PDF, view its content, convert it to MDX, edit the MDX content, and preview the result.
-
-While the project is functional, there are areas that need improvement, and the conversion process isn't perfect yet.
+This project is a web application designed to convert PDF files into JSON format. Users can upload a PDF, view its content, convert it to JSON, edit the JSON content, and preview the result.
 
 ![image](https://github.com/user-attachments/assets/22ee8184-d2f7-4878-8879-a785735fbfa6)
 
@@ -11,11 +9,11 @@ While the project is functional, there are areas that need improvement, and the 
 
 - **PDF Upload**: Upload a PDF file for conversion.
 - **PDF Viewer**: View the uploaded PDF file.
-- **Conversion to MDX**: Convert the PDF content into MDX format.
-- **MDX Editor**: Edit the converted MDX content using a rich text editor.
-- **MDX Preview**: Preview the MDX content as rendered HTML.
+- **Conversion to JSON**: Convert the PDF content into structured JSON format.
+- **JSON Editor**: Edit the converted JSON content using a code editor.
+- **JSON Preview**: Preview the JSON content in a formatted view.
 - **Progress Indicator**: Track the conversion progress.
-- **File Operations**: Save the MDX content to a file, clear the editor, and reset the application.
+- **File Operations**: Save the JSON content to a file, clear the editor, and reset the application.
 
 ## Components
 
@@ -25,17 +23,17 @@ Handles the file input for PDF upload and reads the file content.
 ### `PdfViewer.js`
 Displays the uploaded PDF using `@react-pdf-viewer/core`.
 
-### `MdxEditor.js`
-A rich text editor for MDX content, using `@uiw/react-codemirror`.
+### `JsonEditor.js`
+A code editor for JSON content.
 
-### `MdxPreview.js`
-Renders the MDX content to HTML using `react-markdown` and `remark-gfm`.
+### `JsonPreview.js`
+Renders the JSON content in a formatted view.
 
 ### `ProgressBar.js`
-Displays the progress of the PDF to MDX conversion process.
+Displays the progress of the PDF to JSON conversion process.
 
-### `pdfToMdxConverter.js`
-Contains utility functions for extracting text from PDF, classifying elements, and generating MDX content.
+### `pdfToJsonConverter.js`
+Contains utility functions for extracting text from PDF, classifying elements, and generating JSON content.
 
 ### `_app.js`
 Main entry point for the Next.js application.
@@ -47,30 +45,31 @@ Main page of the application, integrates all components and handles the applicat
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/pdf-to-mdx-converter.git
+   git clone https://github.com/yourusername/pdf-to-json-converter.git
    ```
 
+2. Install dependencies:
+   ```
+   npm install
+   ```
 
-2. Ensure Dependencies are Installed
-Make sure you have installed all the necessary dependencies. If not, run the following command:
+3. Start the development server:
+   ```
+   npm run dev
+   ```
 
-```
-npm install
-```
+4. Open your browser and navigate to:
+   ```
+   http://localhost:3000
+   ```
 
-3. Start the Development Server
-Once the dependencies are installed, you can start the development server using the following command:
+## Usage
 
-```
-npm run dev
-```
-
-4. Open Your Browser
-After running the above command, open your browser and navigate to:
-
-```
-http://localhost:3000
-```
+1. Upload a PDF file using the file input.
+2. Click "Convert to JSON" to process the PDF.
+3. Edit the resulting JSON in the editor if needed.
+4. Use the "Preview JSON" button to see a formatted view.
+5. Save the JSON content to a file using the "Save JSON" button.
 
 ## License
 This project is licensed under the MIT License - see the LICENSE file for details.
