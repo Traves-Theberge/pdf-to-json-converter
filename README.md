@@ -17,28 +17,28 @@ This project is a web application designed to convert PDF files into JSON format
 ## Components
 
 ### `FileUploader.js`
-Handles the file input for PDF upload and reads the file content.
+// Handles user input for PDF file selection and reads the file content
 
 ### `PdfViewer.js`
-Displays the uploaded PDF using `@react-pdf-viewer/core`.
+// Renders the uploaded PDF file using the @react-pdf-viewer/core library
 
 ### `JsonEditor.js`
-A code editor for JSON content.
+// Provides an interactive code editor for modifying the JSON content
 
 ### `JsonPreview.js`
-Renders the JSON content in a formatted view.
+// Displays a formatted view of the JSON content for easy reading
 
 ### `ProgressBar.js`
-Displays the progress of the PDF to JSON conversion process.
+// Shows the current progress of the PDF to JSON conversion process
 
 ### `pdfToJsonConverter.js`
-Contains utility functions for extracting text from PDF, classifying elements, and generating JSON content.
+// Contains core logic for PDF text extraction, element classification, and JSON generation
 
 ### `_app.js`
-Main entry point for the Next.js application.
+// Entry point for the Next.js application, sets up global styles and components
 
 ### `index.js`
-Main page of the application, integrates all components and handles the application logic.
+// Main page component that integrates all other components and manages application state
 
 ## Installation
 

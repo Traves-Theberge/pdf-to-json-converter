@@ -11,7 +11,9 @@ import { convertPdfToJson } from '../utils/pdfToJsonConverter';
 import { saveAs } from 'file-saver';
 import { toast } from 'react-toastify';
 
+// Main component for the PDF to JSON conversion application
 const HomePage = () => {
+  // State variables for managing PDF and JSON data
   const [pdfFile, setPdfFile] = useState(null);
   const [pdfFileName, setPdfFileName] = useState('');
   const [jsonContent, setJsonContent] = useState('');
@@ -20,11 +22,13 @@ const HomePage = () => {
   const [showPreview, setShowPreview] = useState(false);
   const fileInputRef = useRef(null);
 
+  // Handler for PDF file upload
   const handlePdfUpload = (file, fileName) => {
     setPdfFile(file);
     setPdfFileName(fileName);
   };
 
+  // Handler for converting PDF to JSON
   const handleConvert = async () => {
     if (!pdfFile) {
       toast.error('Please upload a PDF file before converting.', { autoClose: 5000 });
@@ -47,21 +51,25 @@ const HomePage = () => {
     }
   };
 
+  // Handler for saving JSON content
   const handleSaveJson = () => {
     const blob = new Blob([jsonContent], { type: 'application/json' });
     saveAs(blob, pdfFileName.replace('.pdf', '.json'));
     toast.success('JSON file saved successfully!', { autoClose: 5000 });
   };
 
+  // Handler for toggling JSON preview
   const handleTogglePreview = () => {
     setShowPreview((prev) => !prev);
   };
 
+  // Handler for clearing JSON editor
   const handleClearEditor = () => {
     setJsonContent('');
     toast.info('JSON editor cleared.', { autoClose: 5000 });
   };
 
+  // Handler for clearing PDF and JSON content
   const handleClearPdf = () => {
     setPdfFile(null);
     setPdfFileName('');
@@ -78,6 +86,7 @@ const HomePage = () => {
 
   return (
     <div className="flex flex-col h-screen">
+      {/* Header with file upload and action buttons */}
       <div className="p-4 flex justify-between items-center">
         <div className="flex items-center">
           <FileUploader onPdfUpload={handlePdfUpload} fileInputRef={fileInputRef} />
@@ -120,11 +129,14 @@ const HomePage = () => {
           </button>
         </div>
       </div>
+      {/* Main content area */}
       <div className="flex-grow flex overflow-hidden">
+        {/* PDF viewer and progress bar */}
         <div className="w-1/2 p-4 overflow-hidden">
           {pdfFile && <PdfViewer pdfUrl={pdfFile} />}
           {isProcessing && <ProgressBar progress={progress} />}
         </div>
+        {/* JSON editor or preview */}
         <div className="w-1/2 p-4 flex flex-col overflow-hidden">
           {showPreview ? (
             <JsonPreview content={jsonContent} />

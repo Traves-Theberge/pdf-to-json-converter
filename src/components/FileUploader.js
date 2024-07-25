@@ -4,10 +4,12 @@ import { toast } from 'react-toastify';
 const FileUploader = ({ onPdfUpload, fileInputRef }) => {
   const [isDragging, setIsDragging] = useState(false);
 
+  // Handle file upload
   const handleFile = (file) => {
     if (file && file.type === 'application/pdf') {
       const reader = new FileReader();
       reader.onload = (e) => {
+        // Call the onPdfUpload callback with file data and name
         onPdfUpload(e.target.result, file.name.replace('.pdf', '.json'));
         toast.success('PDF file uploaded successfully!', { autoClose: 5000 });
       };
@@ -17,6 +19,7 @@ const FileUploader = ({ onPdfUpload, fileInputRef }) => {
     }
   };
 
+  // Handle drag and drop events
   const handleDragOver = (e) => {
     e.preventDefault();
     setIsDragging(true);
@@ -33,6 +36,7 @@ const FileUploader = ({ onPdfUpload, fileInputRef }) => {
     handleFile(file);
   };
 
+  // Handle file input change
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     handleFile(file);
@@ -47,6 +51,7 @@ const FileUploader = ({ onPdfUpload, fileInputRef }) => {
         isDragging ? 'border-blue-500 bg-blue-50' : 'border-gray-300'
       }`}
     >
+      {/* Hidden file input */}
       <input
         type="file"
         accept="application/pdf"
@@ -55,6 +60,7 @@ const FileUploader = ({ onPdfUpload, fileInputRef }) => {
         className="hidden"
         id="fileInput"
       />
+      {/* Custom upload button */}
       <label
         htmlFor="fileInput"
         className="cursor-pointer text-blue-500 hover:text-blue-700"
