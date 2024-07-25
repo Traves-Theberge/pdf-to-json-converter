@@ -12,13 +12,15 @@
     "@react-pdf-viewer/core": "^3.12.0",
     "@react-pdf-viewer/default-layout": "^3.12.0",
     "@react-pdf-viewer/highlight": "^3.12.0",
+    "@react-pdf-viewer/search": "^3.12.0",
     "@uiw/react-codemirror": "^4.23.0",
     "autoprefixer": "^10.4.19",
     "file-saver": "^2.0.5",
     "next": "14.2.5",
     "pdfjs-dist": "^3.11.174",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-toastify": "^10.0.5"
   },
   "devDependencies": {
     "eslint": "^8",

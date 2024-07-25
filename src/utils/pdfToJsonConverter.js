@@ -57,21 +57,34 @@ const generateStructuredContent = (classifiedElements) => {
   return structure;
 };
 
-const convertPdfToJson = async (pdfFile, setProgress) => {
+const generateJsonFromStructure = (structuredContent) => {
+  return JSON.stringify(structuredContent, null, 2);
+};
+
+const convertPdfToJson = async (pdfFile, setProgress, batchSize = 5) => {
   const loadingTask = pdfjsLib.getDocument(pdfFile);
   const pdf = await loadingTask.promise;
   let jsonContent = [];
 
-  for (let i = 1; i <= pdf.numPages; i++) {
-    const page = await pdf.getPage(i);
-    const layout = await extractLayoutInfo(page);
-    const classifiedElements = classifyElements(layout);
-    const structuredContent = generateStructuredContent(classifiedElements);
-    jsonContent.push({ page: i, content: structuredContent });
-    setProgress((i / pdf.numPages) * 100);
+  const processBatch = async (startPage, endPage) => {
+    for (let i = startPage; i <= endPage && i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const layout = await extractLayoutInfo(page);
+      const classifiedElements = classifyElements(layout);
+      const structuredContent = generateStructuredContent(classifiedElements);
+      jsonContent.push({ page: i, content: structuredContent });
+      setProgress((i / pdf.numPages) * 100);
+    }
+  };
+
+  const totalBatches = Math.ceil(pdf.numPages / batchSize);
+  for (let batch = 0; batch < totalBatches; batch++) {
+    const startPage = batch * batchSize + 1;
+    const endPage = Math.min((batch + 1) * batchSize, pdf.numPages);
+    await processBatch(startPage, endPage);
   }
 
-  return JSON.stringify(jsonContent, null, 2);
+  return generateJsonFromStructure(jsonContent);
 };
 
 export { convertPdfToJson };

@@ -1,22 +1,66 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 
 const FileUploader = ({ onPdfUpload, fileInputRef }) => {
-  const handlePdfChange = (event) => {
-    const file = event.target.files[0];
+  const [isDragging, setIsDragging] = useState(false);
+
+  const handleFile = (file) => {
     if (file && file.type === 'application/pdf') {
       const reader = new FileReader();
       reader.onload = (e) => {
         onPdfUpload(e.target.result, file.name.replace('.pdf', '.json'));
+        toast.success('PDF file uploaded successfully!', { autoClose: 5000 });
       };
       reader.readAsDataURL(file);
     } else {
-      alert('Please upload a valid PDF file');
+      toast.error('Please upload a valid PDF file', { autoClose: 5000 });
     }
   };
 
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const file = e.dataTransfer.files[0];
+    handleFile(file);
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    handleFile(file);
+  };
+
   return (
-    <div>
-      <input type="file" accept="application/pdf" onChange={handlePdfChange} ref={fileInputRef} className="mr-2" />
+    <div
+      onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
+      onDrop={handleDrop}
+      className={`border-2 border-dashed p-4 rounded-lg ${
+        isDragging ? 'border-blue-500 bg-blue-50' : 'border-gray-300'
+      }`}
+    >
+      <input
+        type="file"
+        accept="application/pdf"
+        onChange={handleFileChange}
+        ref={fileInputRef}
+        className="hidden"
+        id="fileInput"
+      />
+      <label
+        htmlFor="fileInput"
+        className="cursor-pointer text-blue-500 hover:text-blue-700"
+      >
+        Click to upload or drag and drop a PDF file here
+      </label>
     </div>
   );
 };

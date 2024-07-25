@@ -9,6 +9,7 @@ import ProgressBar from '../components/ProgressBar';
 import JsonPreview from '../components/JsonPreview';
 import { convertPdfToJson } from '../utils/pdfToJsonConverter';
 import { saveAs } from 'file-saver';
+import { toast } from 'react-toastify';
 
 const HomePage = () => {
   const [pdfFile, setPdfFile] = useState(null);
@@ -25,7 +26,10 @@ const HomePage = () => {
   };
 
   const handleConvert = async () => {
-    if (!pdfFile) return;
+    if (!pdfFile) {
+      toast.error('Please upload a PDF file before converting.', { autoClose: 5000 });
+      return;
+    }
 
     setIsProcessing(true);
     setProgress(0);
@@ -34,9 +38,10 @@ const HomePage = () => {
       const content = await convertPdfToJson(pdfFile, setProgress);
       setJsonContent(content);
       setShowPreview(false);
+      toast.success('PDF successfully converted to JSON!', { autoClose: 5000 });
     } catch (error) {
       console.error('Error processing PDF:', error);
-      alert('An error occurred while processing the PDF. Please try again.');
+      toast.error(error.message || 'An error occurred while processing the PDF. Please try again.', { autoClose: 5000 });
     } finally {
       setIsProcessing(false);
     }
@@ -45,6 +50,7 @@ const HomePage = () => {
   const handleSaveJson = () => {
     const blob = new Blob([jsonContent], { type: 'application/json' });
     saveAs(blob, pdfFileName.replace('.pdf', '.json'));
+    toast.success('JSON file saved successfully!', { autoClose: 5000 });
   };
 
   const handleTogglePreview = () => {
@@ -53,6 +59,7 @@ const HomePage = () => {
 
   const handleClearEditor = () => {
     setJsonContent('');
+    toast.info('JSON editor cleared.', { autoClose: 5000 });
   };
 
   const handleClearPdf = () => {
@@ -65,6 +72,8 @@ const HomePage = () => {
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
+    toast.dismiss();
+    toast.info('PDF and JSON content cleared.', { autoClose: 5000 });
   };
 
   return (
@@ -111,16 +120,20 @@ const HomePage = () => {
           </button>
         </div>
       </div>
-      <div className="flex h-full">
-        <div className="w-1/3 p-4 overflow-auto">
-          {pdfFile ? <PdfViewer pdfUrl={pdfFile} /> : <p>Please upload a PDF file</p>}
+      <div className="flex flex-1 overflow-hidden">
+        <div className="w-2/5 p-4 overflow-hidden">
+          {pdfFile && <PdfViewer pdfUrl={pdfFile} />}
           {isProcessing && <ProgressBar progress={progress} />}
         </div>
-        <div className="w-2/3 p-4 flex flex-col overflow-auto">
+        <div className="w-3/5 p-4 flex flex-col overflow-hidden">
           {showPreview ? (
-            <JsonPreview content={jsonContent} />
+            <div className="flex-1 overflow-auto">
+              <JsonPreview content={jsonContent} />
+            </div>
           ) : (
-            <JsonEditor jsonContent={jsonContent} setJsonContent={setJsonContent} />
+            <div className="flex-1 overflow-hidden">
+              <JsonEditor jsonContent={jsonContent} setJsonContent={setJsonContent} />
+            </div>
           )}
         </div>
       </div>
